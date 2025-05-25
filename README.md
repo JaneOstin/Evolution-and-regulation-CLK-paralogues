@@ -63,7 +63,7 @@ STAR --genomeDir ${IND} --readFilesIn ${DIR}_R1_001.fastq.gz ${DIR}_R2_001.fastq
 
 To get splice junctions and sites the [pyIPSA](https://github.com/Leoberium/pyIPSA) pipeline was used. All steps have been taken according to the developers. 
 
-For futher analysis J6 and S6 files were used. They were processed with code in ```./Merge_pyIPSA_results.ipynb```. The result was a table with all cassete exons ``.csv`` and a track for [UCSC genome browser](https://genome.ucsc.edu/) ``.bed``. On the custom track we can see clearly what uproductive splicing events are occurring in the genome.
+For futher analysis J6 and S6 files were used. They were processed with code in ```./Merge_pyIPSA_results.ipynb```. The result was a table with all cassete exons ``.csv`` and a track for [UCSC genome browser](https://genome.ucsc.edu/) ``.bed``. On the custom track we can see clearly what uproductive splicing events are occurring in the genome. The example of this track is in ```./data/cassete_exons_PC3_control_chx.bed```
 
 |![Track](./data/UCSC_track.png)|
 |:--:|
@@ -85,7 +85,7 @@ The code for this step in ```./RBP_regulation.ipynb```.
 
 In previous step significant impacts of RBPs were obtained. Firstly, for these proteins binding sites were searched in [POSTAR3](https://doi.org/10.1093/nar/gkab702) and [ATtRACT](https://doi.org/10.1093/database/baw035) database. Secondly, we tried to find conserved regions in alignment and match them with known binding sites using [MEME Suite](https://doi.org/10.1093/nar/gkv416) tool.
 
-The code for this step in ```./RBP_binding_sites.ipynb```.
+The code for this step in ```./RBP_binding_sites.ipynb```. Sequences of CLKs in fasta file ```./data/clk.fasta```.
 
 ### Phylogenetic analysis
 

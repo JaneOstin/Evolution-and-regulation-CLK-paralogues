@@ -3,6 +3,45 @@ import pandas as pd
 import numpy as np
 
 from intervaltree import Interval, IntervalTree
+from collections import Counter
+
+
+iupac_codes = {
+    frozenset("A"): "A",
+    frozenset("C"): "C",
+    frozenset("G"): "G",
+    frozenset("T"): "T",
+    frozenset("AC"): "M",
+    frozenset("AG"): "R",
+    frozenset("AT"): "W",
+    frozenset("CG"): "S",
+    frozenset("CT"): "Y",
+    frozenset("GT"): "K",
+    frozenset("ACG"): "V",
+    frozenset("ACT"): "H",
+    frozenset("AGT"): "D",
+    frozenset("CGT"): "B",
+    frozenset("ACG"): "N"
+}
+
+
+iupac_rna_codes = {
+    frozenset("A"): "A",
+    frozenset("C"): "C",
+    frozenset("G"): "G",
+    frozenset("U"): "U",
+    frozenset("AC"): "M",
+    frozenset("AG"): "R",
+    frozenset("AU"): "W",
+    frozenset("CG"): "S",
+    frozenset("CU"): "Y",
+    frozenset("GU"): "K",
+    frozenset("ACG"): "V",
+    frozenset("ACU"): "H",
+    frozenset("AGU"): "D",
+    frozenset("CGU"): "B",
+    frozenset("ACGU"): "N"
+}
 
 
 def make_junction_table(meta, j_path, colnames):
@@ -154,3 +193,54 @@ def select_exon(row, intervals):
                         return str(intron_number) + '_poison'
     else:
         return row['exon_number']
+
+
+def conservation_score(column):
+    '''Calculates the degree of conservativity of the alignment column'''
+    bases = [b for b in column if b != '-']
+    if not bases:
+        return 0.0
+    most_common = Counter(bases).most_common(1)[0][1]
+    return most_common / len(bases)
+
+
+def is_fully_covered(column):
+    '''Check if we have any gaps'''
+    return '-' not in column
+
+
+def find_fully_conserved_windows(alignment, window=10, threshold=0.9):
+    '''Finds sections in a multiple alignment that satisfy the condition'''
+    alignment_length = alignment.get_alignment_length()
+    conserved_windows = []
+
+    for i in range(alignment_length - window + 1):
+        window_cols = [alignment[:, i + j] for j in range(window)]
+
+        scores = [conservation_score(col) for col in window_cols]
+        no_gaps = all(is_fully_covered(col) for col in window_cols)
+
+        if (sum(scores) / window) >= threshold and no_gaps:
+            conserved_windows.append((i + 1, i + window))
+
+    return conserved_windows
+
+
+def get_consensus_motif(sequences):
+    '''Function for obtaining the sequence motif '''
+    motif = ""
+    for pos in zip(*sequences):
+        nucs = frozenset(pos)
+        symbol = iupac_codes.get(nucs, "N")
+        motif += symbol
+    return motif
+
+
+def get_rna_consensus_motif(sequences):
+    '''Function for obtaining the sequence RNA motif '''
+    motif = ""
+    for pos in zip(*sequences):
+        nucs = frozenset(pos)
+        symbol = iupac_rna_codes.get(nucs, "N")
+        motif += symbol
+    return motif
