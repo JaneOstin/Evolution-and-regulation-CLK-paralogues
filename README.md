@@ -20,9 +20,17 @@ Author: Antonina Kuznetsova, mail: kuznetsova.antonina@outlook.com
 
 ## Introduction
 
-Paralogues are genes within the same species that arise as a result of gene duplication and often retain similar sequences, but may differ in function over time. In humans, paralogues are necessary to expand the functionality of the genome, providing specialization and redundancy in various biological processes. **The CLK family of dual specificity protein kinases is one of these genes, which includes 4 paralogues.** They play a crucial role in regulating alternative splicing (AS), which is a fundamental process to eukaryotic gene expression and adaptation. 
+This repository focuses on the CLK family of dual-specificity protein kinases, which consists of 4 human paralogues. These kinases play a key role in regulating alternative splicing (AS) — a critical mechanism of eukaryotic gene expression and adaptation.
 
-One of the regulatory mechanisms involving AS is unproductive splicing (US) which leads to the formation of a premature termination codon (PTC) and subsequent degradation of the isoform by nonsense-mediated mRNA decay (NMD). **This coupling of splicing and RNA surveillance serves as a feedback mechanism to regulate gene expression**, particularly for genes involved in RNA processing and signaling. Investigating this family, particularly in relation to US events, enables us to uncover regulatory patterns that lead to such splicing outcomes.
+This codebase provides tools to:
+
+- Detect unproductive splicing (US) events in CLK paralogues
+
+- Identify associated regulatory patterns, such as RNA-binding protein (RBP) motifs and RNA secondary structures
+
+- Construct phylogenetic tree to explore evolutionary relationships among CLK paralogues
+
+By combining sequence analysis and regulatory feature detection, this project aims to uncover conserved mechanisms that shape splicing outcomes across CLK paralogous genes.
 
 ## Aims and objectives
 
@@ -46,7 +54,7 @@ For phylogenetic analysis 64 CLK homologs from 28 different species were used, t
 
 ### Alignment with STAR
 
-RNA-seq data were aligned using [STAR](https://doi.org/10.1093/bioinformatics/bts635) with default parametrs:
+RNA-seq data were aligned using [STAR](https://doi.org/10.1093/bioinformatics/bts635) version 2.7.10b with default parametrs:
 - RAW - /path/to/raw_data
 - ANT - /path/to/annotation_file
 - IND - /path/to/genome_indices_directory
@@ -89,7 +97,7 @@ The code for this step in ```./RBP_binding_sites.ipynb```. Sequences of CLKs in 
 
 ### Phylogenetic analysis
 
-Protein sequences were aligned with [MAFFT](https://doi.org/10.1093/nar/gkf436), then evolution model was choosed and phylogenetic tree was constructed with [IQ-TREE2](https://doi.org/10.1093/molbev/msaa015). Tree visualization was performed by [iTOL](https://itol.embl.de/).
+Protein sequences were aligned with [MAFFT](https://doi.org/10.1093/nar/gkf436) v7.526, then evolution model was choosed and phylogenetic tree was constructed with [IQ-TREE2](https://doi.org/10.1093/molbev/msaa015) version 2.3.6. Tree visualization was performed by [iTOL](https://itol.embl.de/).
 
 ```
 mafft --auto output_clks.fasta > output_clks_mafft.fasta
@@ -102,7 +110,7 @@ iqtree2 -s output_clks_mafft.fasta -m Q.mammal+I+R5 -pre CLKs_Q_B_alrt_abayes -b
 
 ### RNA secondary structures
 
-RNA secondary structures were searched in conserved regions. Handle alingment was done with Python [Biotite](https://www.biotite-python.org/latest/index.html), Vienna format was made with Python [RNA](https://viennarna.readthedocs.io/en/latest/api_python.html). [RNAcanvas](https://rnacanvas.app/) was used to visualise RNA secondary structures. 
+RNA secondary structures were searched in conserved regions. Handle alingment was done with Python [Biotite](https://www.biotite-python.org/latest/index.html) version 1.1.0, Vienna format was made with Python [RNA](https://viennarna.readthedocs.io/en/latest/api_python.html) version 2.7.0. [RNAcanvas](https://rnacanvas.app/) was used to visualise RNA secondary structures. 
 
 The code for this step in ```./RNA_secondary_structures.ipynb```.
 
