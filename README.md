@@ -71,7 +71,7 @@ STAR --genomeDir ${IND} --readFilesIn ${DIR}_R1_001.fastq.gz ${DIR}_R2_001.fastq
 
 To get splice junctions and sites the [pyIPSA](https://github.com/Leoberium/pyIPSA) pipeline was used. All steps have been taken according to the developers. 
 
-For futher analysis J6 and S6 files were used. They were processed with code in ```./Merge_pyIPSA_results.ipynb```. The result was a table with all cassete exons ``.csv`` and a track for [UCSC genome browser](https://genome.ucsc.edu/) ``.bed``. On the custom track we can see clearly what uproductive splicing events are occurring in the genome. The example of this track is in ```./data/cassete_exons_PC3_control_chx.bed```
+For futher analysis J6 and S6 files were used. They were processed with code in ```./notebooks/Merge_pyIPSA_results.ipynb```. The result was a table with all cassete exons ``.csv`` and a track for [UCSC genome browser](https://genome.ucsc.edu/) ``.bed``. On the custom track we can see clearly what uproductive splicing events are occurring in the genome. The example of this track is in ```./data/cassete_exons_PC3_control_chx.bed```
 
 |![Track](./data/UCSC_track.png)|
 |:--:|
@@ -81,19 +81,19 @@ For futher analysis J6 and S6 files were used. They were processed with code in 
 
 Reactivity of exons was done in human and mice. The idea was to compare cassete exons from previous step and from annotation. If there is no cassete exon in annotation we can say that it is a poison exon, which leads to formation of PTC and gets a suffix _poison.
 
-The code for this step in ```./Exons_reactivity.ipynb```.
+The code for this step in ```./notebooks/Exons_reactivity.ipynb```.
 
 ### Regulation by RNA binding proteins
 
 We have RNA-seq data of knockdown and overexpresion of several RBPs (QKI, PTBP1, ILF2, RBFOX2, SRSF3, HNRNPU, TARDBP) with and without cycloheximide. The data was processed with pyIPSA and cassete exons were obtained. Regulation was assessed relative to dPSI of untreated cells. These results were then visualised for clarity. 
 
-The code for this step in ```./RBP_regulation.ipynb```.
+The code for this step in ```./notebooks/RBP_regulation.ipynb```.
 
 ### RBP binding sites 
 
 In previous step significant impacts of RBPs were obtained. Firstly, for these proteins binding sites were searched in [POSTAR3](https://doi.org/10.1093/nar/gkab702) and [ATtRACT](https://doi.org/10.1093/database/baw035) database. Secondly, we tried to find conserved regions in alignment and match them with known binding sites using [MEME Suite](https://doi.org/10.1093/nar/gkv416) tool.
 
-The code for this step in ```./RBP_binding_sites.ipynb```. Sequences of CLKs in fasta file ```./data/clk.fasta```.
+The code for this step in ```./notebooks/RBP_binding_sites.ipynb```. Sequences of CLKs in fasta file ```./data/clk.fasta```.
 
 ### Phylogenetic analysis
 
@@ -112,7 +112,7 @@ iqtree2 -s output_clks_mafft.fasta -m Q.mammal+I+R5 -pre CLKs_Q_B_alrt_abayes -b
 
 RNA secondary structures were searched in conserved regions. Handle alingment was done with Python [Biotite](https://www.biotite-python.org/latest/index.html) version 1.1.0, Vienna format was made with Python [RNA](https://viennarna.readthedocs.io/en/latest/api_python.html) version 2.7.0. [RNAcanvas](https://rnacanvas.app/) was used to visualise RNA secondary structures. 
 
-The code for this step in ```./RNA_secondary_structures.ipynb```.
+The code for this step in ```./notebooks/RNA_secondary_structures.ipynb```.
 
 ## Results
 
